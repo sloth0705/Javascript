@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반복문</title>
+    <!-- 
+        날짜 : 2023/07/17
+        이름 : 신진성
+        내용 : 자바스크립트 조건문 실습하기
+     -->
+</head>
+<body>
+    <h3>반복문</h3>
+
+    <h4>for</h4>
+    <script>
+        // for
+        for (let i = 1; i <= 5; i++) {
+            document.write('i : ' + i + '<br>');
+        }
+
+        // 1부터 10까지의 합
+        let sum = 0;
+
+        for (let i = 1; i <= 10; i++) {
+            sum += i;
+        }
+        document.write('1부터 10까지의 합 : ' + sum + '<br>');
+
+        // 1부터 10까지의 짝수합
+        let evenSum = 0;
+        for (let i = 2; i <= 10; i+=2){
+            evenSum += i;
+        }
+        document.write('1부터 10까지의 짝수합 : ' + evenSum + '<br>');
+
+        // 별삼각형
+        for (let i = 1; i <= 10; i++) {
+            for (let j = 1; j <= i; j++) {
+                document.write('☆');
+            }
+            document.write('<br>');
+        }
+    </script>
+    <h4>while</h4>
+    <script>
+        // while
+        let total = 0;
+        let k = 1;
+        while (k <= 10) {
+            if (k % 2 == 0) {
+                total += k;
+            }
+            k++;
+        }
+        document.write('1부터 10까지의 짝수합 : '+ total +'<br>');
+
+        // do-while
+        let oddSum = 0;
+        let j = 1;
+        do {
+            if (j % 2 == 1) {
+                oddSum += j;
+            }
+            j++;
+        } while (j <= 10)
+        document.write('1부터 10까지의 홀수합 : '+ oddSum +'<br>');
+
+        // break
+        let num = 1;
+        while(true) {
+            if (num % 5 == 0 && num % 7 == 0) {
+                break;
+            }
+            num++;
+        }
+        document.write('5와 7의 최소공배수 : '+ num +'<br>');
+
+        // continue
+        let tot = 0;
+        for (let i = 1; i <= 10; i++) {
+            if (i % 2 == 1) {
+                continue;
+            }
+            tot += i;
+        }
+        document.write('1부터 10까지 짝수합 : '+ tot +'<br>');
+    </script>
+    <h3>구구단</h3>
+    <script>
+        document.write('<table border = "1">');
+        document.write('<tr>');
+        for (let j = 2; j <= 9; j++) {
+            document.write('<td>' + j + '단');
+            document.write('</td>');
+        }
+        document.write('</tr>')
+        for (let i = 1; i <= 9; i++) {
+            document.write('<tr>');
+            for (let j = 2; j <= 9; j++) {
+                document.write('<td>' + j + ' * ' + i + " = " + i * j);
+                document.write('</td>');
+            }
+            document.write('</tr>');
+        }
+        document.write('</table>');
+    </script>
+</body>
+</html>
