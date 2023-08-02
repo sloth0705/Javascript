@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지도 API</title>
+    <!-- 
+        날짜 : 2023/08/02
+        이름 : 신진성
+        내용 : 지도 API 실습하기
+    -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ba5e79c6ef8d55ee767dfec7ec16c7fb"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+        $(function() {
+            var container = document.getElementById('map1'); //지도를 담을 영역의 DOM 레퍼런스
+            var options = { //지도를 생성할 때 필요한 기본 옵션
+                center: new kakao.maps.LatLng(35.137203891348825, 129.09906263917298), //지도의 중심좌표.
+                level: 3 //지도의 레벨(확대, 축소 정도)
+            };
+    
+            var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+            var mapContainer = document.getElementById('map2'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng(35.137203891348825, 129.09906263917298), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+            // 마커가 표시될 위치입니다 
+            var markerPosition  = new kakao.maps.LatLng(35.137203891348825, 129.09906263917298); 
+
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+
+            // 마커가 지도 위에 표시되도록 설정합니다
+            marker.setMap(map);
+
+            // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+            // marker.setMap(null);  
+
+
+            var mapContainer = document.getElementById('map3'), // 지도를 표시할 div  
+            mapOption = { 
+                center: new kakao.maps.LatLng(35.15852597835937, 129.15987668727286), // 지도의 중심좌표
+                level: 7 // 지도의 확대 레벨
+            };
+            
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+            
+            // 마커를 표시할 위치와 title 객체 배열입니다 
+            var positions = [
+                {
+                    title: '해운대', 
+                    latlng: new kakao.maps.LatLng(35.15852597835937, 129.15987668727286),
+                    content: '<p>해운대 해수욕장</p>'
+                },
+                {
+                    title: '광안리', 
+                    latlng: new kakao.maps.LatLng(35.15319056186189, 129.11897657185582),
+                    content: '<p>광안리 해수욕장</p>'
+                },
+                {
+                    title: '송정 해수욕장', 
+                    latlng: new kakao.maps.LatLng(35.178596037779116, 129.19970012096772),
+                    content: '<p>송정 해수욕장</p>'
+                }
+            ];
+            
+            // 마커 이미지의 이미지 주소입니다
+            var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+                
+            for (var i = 0; i < positions.length; i ++) {
+                
+                // 마커 이미지의 이미지 크기 입니다
+                var imageSize = new kakao.maps.Size(24, 35); 
+                
+                // 마커 이미지를 생성합니다    
+                var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+                
+                // 마커를 생성합니다
+                var marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: positions[i].latlng, // 마커를 표시할 위치
+                    title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                    image : markerImage // 마커 이미지 
+                });
+                var infowindow = new kakao.maps.InfoWindow({
+                    position : positions[i].latlng, 
+                    content: positions[i].content
+                });
+                
+                // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+                infowindow.open(map, marker); 
+            }
+        })
+    </script>
+</head>
+<body>
+    <h3>지도 API 실습</h3>
+    <h4>지도 생성하기</h4>
+    <div id="map1" style="width:800px;height:350px;"></div>
+    <h4>마커 생성하기</h4>
+    <div id="map2" style="width:800px;height:350px;"></div>
+    <h4>해운대, 광안리, 송정 해수욕장 마커 표시</h4>
+    <div id="map3" style="width:800px;height:350px;"></div>
+
+</body>
+</html>

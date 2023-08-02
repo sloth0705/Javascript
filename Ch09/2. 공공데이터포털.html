@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공공데이터포털</title>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ba5e79c6ef8d55ee767dfec7ec16c7fb"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+        $(function() {
+            var container = document.getElementById('map1'); //지도를 담을 영역의 DOM 레퍼런스
+            var options = { //지도를 생성할 때 필요한 기본 옵션
+                center: new kakao.maps.LatLng(35.137203891348825, 129.09906263917298), //지도의 중심좌표.
+                level: 3 //지도의 레벨(확대, 축소 정도)
+            };
+    
+            var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+            $.ajax({
+                url: 'https://apis.data.go.kr/B551011/GoCamping/basedList?numOfRows=200&MobileOS=AND&MobileApp=AND&serviceKey=kintORBJFVa3LIZcajgAfCskawsSFYOBpW%2FKsxiim%2FVP1Xlmh6oK0X0VD4uUWl2oMoY%2BOhh3GSBRwJxYIl1ZTA%3D%3D&_type=json',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data){
+                    console.log(data.response.body.items.item);
+                    const items = data.response.body.items.item;
+                    for (let item of items) {
+                        console.log(item.facltNm);
+                        var marker = new kakao.maps.Marker({
+                            position: new kakao.maps.LatLng(item.mapY, item.mapX),
+                            title : item.facltNm
+                        });
+                        marker.setMap(map);
+                    }
+                } 
+            });
+        });
+        $(function() {
+            var container = document.getElementById('map2'); //지도를 담을 영역의 DOM 레퍼런스
+            var options = { //지도를 생성할 때 필요한 기본 옵션
+                center: new kakao.maps.LatLng(35.137203891348825, 129.09906263917298), //지도의 중심좌표.
+                level: 3 //지도의 레벨(확대, 축소 정도)
+            };
+    
+            var map2 = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+            $.ajax({
+                url: 'https://apis.data.go.kr/6260000/BusanAnimalHospService/getTblAnimalHospital?serviceKey=kintORBJFVa3LIZcajgAfCskawsSFYOBpW%2FKsxiim%2FVP1Xlmh6oK0X0VD4uUWl2oMoY%2BOhh3GSBRwJxYIl1ZTA%3D%3D&pageNo=1&numOfRows=1000&resultType=json',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data){
+                    console.log(data.getTblAnimalHospital.body.items.item);
+                    const items = data.getTblAnimalHospital.body.items.item;
+                    for (let item of items) {
+                        console.log(item.facltNm);
+                        var marker = new kakao.maps.Marker({
+                            position: new kakao.maps.LatLng(item.lat, item.lon),
+                            title : item.animal_hospital
+                        });
+                        marker.setMap(map2);
+                    }
+                } 
+            });
+        });
+    </script>
+</head>
+<body>
+    <h3>공공데이터포털</h3>
+    <h4>전국 캠핑장</h4>
+    <div id="map1" style="width:1200px;height:800px;"></div>
+    <h4>부산 동물병원 위치</h4>
+    <div id="map2" style="width:1200px;height:800px;"></div>
+</body>
+</html>
